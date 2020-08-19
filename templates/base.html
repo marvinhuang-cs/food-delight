@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Delight</title>
+    <link rel="stylesheet"
+        href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/app.css">
+    <link rel="shortcut icon" href="\static\favicon.ico.png">
+</head>
+
+<body style="background-color: #e3f2fd;">
+    <nav class="navbar navbar-light justify-content-between" style="background-color: #e3f2fd;">
+        <a class="navbar-brand" href="/"> <img src="\static\favicon.ico.png" width="30" height="30" class="d-inline-block align-top" alt="">
+             Food Delight</a>
+             {% if not g.user %}
+             <div class="form-inline">
+              <a href="/login"><button class="form-control mr-sm-2">Log in</button></a>
+              <a href="/signup"><button class="btn btn-success my-2 my-sm-0">Sign Up</button></a>
+            </div>
+            {% else %}
+            <div class="form-inline">
+              <a href="/favorites"><button class="btn btn-warning mr-sm-2">Favorites</button></a> 
+              <a href="/logout"><button class="btn btn-danger my-2 my-sm-0">Log out</button></a>
+            </div>
+            {% endif %}
+      </nav>
+      
+      <div class="container">
+        {% for category, message in get_flashed_messages(with_categories=True) %}
+        <div class="alert alert-{{ category }}">{{ message }}</div>
+        {% endfor %}
+      </div>
+
+    {% block content %}
+    {% endblock %}
+
+
+    {% block script %}
+    <script>
+      const API_KEY = `{{API_KEY}}`
+    </script>
+    {% endblock %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="\static\app.js"></script>
+
+
+</body>
+</html>
+

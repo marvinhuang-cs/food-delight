@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container w-100 text-center">
+<div class="card bg-light text-center p-3 m-3" style="width: 75%">
+    <h3 class="card-title mt-3 text-center">Create Account</h3>
+    <form method="POST" id="user_form">
+        {{ form.hidden_tag() }}
+
+        {% for field in form if field.widget.input_type != 'hidden' %}
+          {% for error in field.errors %}
+            <span class="text-danger">{{ error }}</span>
+          {% endfor %}
+          {{ field(placeholder=field.label.text, class="form-control m-2") }}
+        {% endfor %}
+        <button class="btn btn-success">Sign up</button>
+    </form>
+</div>
+</div>
+{% endblock %}

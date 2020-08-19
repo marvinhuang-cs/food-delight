@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div id="recipe_info" class="text-center">
+
+</div>
+
+
+{% endblock %}
+
+{% block script %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.js"></script>
+<script>
+    const API_KEY = `{{API_KEY}}`
+    async function getRecipe(recipe_id) {
+        let response = await axios.get(`https://api.spoonacular.com/recipes/{{recipe_id}}/information?${API_KEY}`)
+        console.log(response)
+        let data = await response.data;
+        console.log(data)
+        $('#recipe_info').append(`
+    <div class="container fluid bg-light text-dark">
+        <img class="card-img-top p-3 m-3" style="max-width: 20rem;" src="${data.image}" alt="Card image cap">
+        <h2>${data.title}</h2>
+        <h6 class="text-muted font-italic">Source: <a href="${data.sourceUrl}">${data.sourceName}</a></h6>
+
+    <div class="container p-t-md">
+    <div class="row justify-content-center">
+        <div class="w-75">
+            <ul class="nav nav-tabs justify-content-center">
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" href="#summary">Summary</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#ingredients">Ingredients</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#instructions"> Instructions </a>
+                </li>
+                <li class="nav-item">
+                    <form method="POST" action="/recipes/${data.id}/fav" class="justify-content-center">
+                        <button class="btn btn-sm">
+                        <i class="far fa-heart"></i> 
+                        <input type="hidden" name="recipe_name" value="${data.title}">
+                        </button>
+                    </form>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active text-left" id="summary">
+                    <ul class="list-group media-list media-list-stream">
+                        <p>${data.summary}</p>
+                    </ul>
+                </div>
+                <div role="tabpanel" class="tab-pane fade in text-left" id="ingredients">
+                    <ul class="list-group media-list media-list-stream">
+                        <p id="ingredients-list"></p>
+                    </ul>
+                </div>
+                <div role="tabpanel" class="tab-pane fade in text-left" id="instructions">
+                    <ul class="list-group media-list media-list-stream">
+                        <p><ol id="instructions-list"></ol></p>
+                    </ul>
+                </div>
+                 <div role="tabpanel" class="tab-pane fade in" id="nutrtion">
+                    <ul class="list-group media-list media-list-stream">
+                        <p></p>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    `
+        )
+        data.extendedIngredients.forEach(function(ingredient) {
+            $('#ingredients-list').append(`<li>${ingredient.originalString}</li>`)
+        })
+        console.log(data.analyzedInstructions[0].steps)
+
+        data.analyzedInstructions[0].steps.forEach(function(step){
+            $('#instructions-list').append(`<li>${step.step}</li>`)
+        })
+    }
+    getRecipe();
+</script>
+{% endblock %}

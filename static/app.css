@@ -1,0 +1,11 @@
+.card {display:inline-block;}
+
+#cover {
+    background-image: url(brooke-lark-08bOYnH_r_E-unsplash.jpg);
+    background-size: cover;
+}
+
+html, body {
+    margin: 0;
+    height: 100%;
+}

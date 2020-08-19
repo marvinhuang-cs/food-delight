@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container fluid bg-light text-dark">
+<h2>Favorited Recipes</h2>
+<ul id="favorite">
+{% for recipe in recipes %}
+
+<li>
+    <div class="form-inline">
+    <a href="/recipes/{{recipe.recipes}}">{{recipe.name}}</a>
+    <form method="POST" action="/recipes/{{recipe.recipes}}/delete">
+        <button class="btn btn-sm">
+            <i class="fas fa-trash-alt"></i>
+        </button>
+      </form>
+    </div>
+</li>
+{% endfor %}
+</ul>
+
+</div>
+{% endblock %}
+
+
+{% block script %}
+{% endblock %}
