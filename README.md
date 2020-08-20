@@ -2,7 +2,7 @@ Food Database API
 https://spoonacular.com/food-api/
 
 Food Delight is a recipe application I have created and deployed to Heroku. 
-The URL is __
+The URL is https://food-delight-project.herokuapp.com/
 
 This website allows users to search recipes from the Spoonacular database.
 Users can register an account to favorite and save recipes.
